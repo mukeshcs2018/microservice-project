@@ -25,10 +25,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authz) -> authz
+                .authorizeHttpRequests((auth) -> auth
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults());
+                .httpBasic(withDefaults())
+                .csrf(csrf -> csrf.disable());  // Disable CSRF protection using the new method
         return http.build();
     }
 
@@ -41,5 +42,4 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(user);
     }
-
 }
